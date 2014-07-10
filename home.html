@@ -28,10 +28,10 @@
 
 	<!-- Angular JS Files -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="assets/js/mediaelement-and-player.min.js"></script>
-  	<script type="text/javascript" src="assets/js/angular.js"></script>
-  	<script type="text/javascript" src="assets/js/controllers.js"></script>
-  	<script type="text/javascript" src="assets/js/soundcloud.player.api.js"></script>
+  <script src="assets/js/mediaelement-and-player.min.js"></script>
+  <script type="text/javascript" src="assets/js/angular.js"></script>
+  <script type="text/javascript" src="assets/js/controllers.js"></script>
+  <script type="text/javascript" src="assets/js/soundcloud.player.api.js"></script>
 	<script type="text/javascript" src="assets/js/sc-player.js"></script>
 	<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
 	<script type="text/ng-template" id="myModalContent.html"></script>
@@ -98,7 +98,7 @@
       </tr>
       </thead>
       <tr ng-repeat="like in likes | filter:query | orderBy:sortField:reverse">
-        <td width="30%"><a id="tune-link" href=# data-permalink="{{ like.permalink_url}}">{{like.title}}</td>
+        <td width="30%"><a onclick="playSong(this)" href='#' data-permalink="{{ like.id}}">{{like.title}}</td>
         <td><a href="#" ng-click="getData(like.user.permalink)">{{like.user.username}}</a></td>
         <td width="10%">{{like.favoritings_count}}</td>
         <td>{{like.playback_count}}</td>
@@ -110,14 +110,36 @@
 </div>
 	
 <script type="text/javascript">
-	$(function()
-{
-    $("#tune-link").click(function(){
-                $(.sc-player).attr("href", $(this).attr('data-permalink'));
-        });
-});
+  current_sound = null;
+	
+	function playSong(obj){
+	  console.log($(obj).attr("data-permalink"));
+		// /doppie/big-dope-p-moveltlife
+				
+				
+	  if(current_sound != null){
+		  current_sound.stop();
+		}
+		
+		SC.stream("/tracks/" + $(obj).attr("data-permalink"), function(sound){
+		  current_sound = sound
+      sound.play();
+    });
+		
+	}
 
 </script>
 	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-angular.module('LikeSorter', ['ui.bootstrap']); v
+angular.module('LikeSorter', ['ui.bootstrap']);
 
 // Controller for pulling soundcloud data
 
